@@ -1,0 +1,38 @@
+# Built objects
+build/
+bin/
+gen/
+out/
+
+# Gradle
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+
+# Android Studio / IntelliJ
+*.iml
+.idea/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Log Files
+*.log
+
+# Android Studio captures
+captures/
+
+# External native build artifacts
+.externalNativeBuild/
+.cxx/
+
+# Keystore files
+*.jks
+*.keystore
+
+# macOS
+.DS_Store
+
+# APKs
+*.apk
+*.aar
