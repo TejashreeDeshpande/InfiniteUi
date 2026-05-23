@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -48,10 +49,20 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.koin.compose)
     implementation(libs.koin.compose.viewmodel)
     implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.paging.compose)
+    implementation(libs.androidx.compose.material.icons.extended)
+
+    implementation("io.coil-kt:coil-compose:2.6.0")
+
+    // For Coil 3.x (Compose Multiplatform / Latest)
+    implementation("io.coil-kt.coil3:coil-compose:3.0.4")
+    // Note: Coil 3 needs an extra network dependency to load URLs
+    implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.4")
 
     testImplementation(libs.junit)
 

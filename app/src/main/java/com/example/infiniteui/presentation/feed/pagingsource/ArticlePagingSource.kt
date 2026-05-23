@@ -1,4 +1,4 @@
-package com.example.infiniteui.presentation
+package com.example.infiniteui.presentation.feed.pagingsource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

@@ -10,26 +10,42 @@ import androidx.compose.ui.graphics.Color
 private val LightColors = lightColorScheme(
     primary = PurplePrimary,
     secondary = PurpleSecondary,
+
     background = Background,
     surface = Surface,
-    error = ErrorRed,
+    surfaceVariant = SurfaceSoft,
+
     onPrimary = Color.White,
     onSecondary = Color.White,
+
     onBackground = TextPrimary,
     onSurface = TextPrimary,
+    onSurfaceVariant = TextSecondary,
+
+    outline = BorderLight,
+
+    error = ErrorRed,
     onError = Color.White
 )
 
 private val DarkColors = darkColorScheme(
     primary = PurpleSecondary,
     secondary = PurpleLight,
-    background = Color(0xFF121018),
-    surface = Color(0xFF1C1824),
-    error = ErrorRed,
+
+    background = DarkBackground,
+    surface = DarkSurface,
+    surfaceVariant = DarkSurfaceSoft,
+
     onPrimary = Color.White,
     onSecondary = Color.White,
-    onBackground = Color(0xFFF5F3FF),
-    onSurface = Color(0xFFF5F3FF),
+
+    onBackground = DarkTextPrimary,
+    onSurface = DarkTextPrimary,
+    onSurfaceVariant = DarkTextSecondary,
+
+    outline = DarkBorder,
+
+    error = ErrorRed,
     onError = Color.White
 )
 

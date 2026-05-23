@@ -1,5 +1,7 @@
 package com.example.infiniteui.data
 
+import com.example.infiniteui.data.ImageItem
+
 object MockRepository {
     val mockArticles = (1..100).map { index ->
 
@@ -44,6 +46,13 @@ object MockRepository {
             subtitle = subtitles.random(),
             category = categories.random(),
             readTime = "${(4..12).random()} min read"
+        )
+    }
+
+    val allImages = (1..100).map { index ->
+        ImageItem(
+            id = index.toString(),
+            imageUrl = "https://picsum.photos/seed/$index/600/800"
         )
     }
 }
