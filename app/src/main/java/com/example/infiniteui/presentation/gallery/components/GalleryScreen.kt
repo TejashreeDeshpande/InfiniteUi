@@ -22,7 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.infiniteui.data.ImageItem
-import com.example.infiniteui.presentation.gallery.viewmodel.ImageViewModel
+import com.example.infiniteui.presentation.ImageViewModel
+import com.example.infiniteui.presentation.gridview.components.HeroImageScreen
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable

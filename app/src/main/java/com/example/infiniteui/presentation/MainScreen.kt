@@ -18,6 +18,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.infiniteui.presentation.feed.composables.ArticleListScreen
 import com.example.infiniteui.presentation.gallery.components.GalleryScreen
+import com.example.infiniteui.presentation.gridview.components.GridViewScreen
 import com.example.infiniteui.presentation.model.Screen
 import com.example.infiniteui.presentation.model.icon
 import com.example.infiniteui.presentation.model.title
@@ -28,7 +29,8 @@ fun MainScreen() {
     val navController = rememberNavController()
     val items = listOf(
         Screen.Feed,
-        Screen.Gallery
+        Screen.Gallery,
+        Screen.GridView
     )
     Scaffold(
         bottomBar = {
@@ -71,6 +73,7 @@ fun MainScreen() {
         ) {
             composable<Screen.Feed> { ArticleListScreen() }
             composable<Screen.Gallery> { GalleryScreen() }
+            composable<Screen.GridView> { GridViewScreen() }
         }
     }
 }

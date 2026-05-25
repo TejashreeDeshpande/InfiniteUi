@@ -1,4 +1,4 @@
-package com.example.infiniteui.presentation.gallery.viewmodel
+package com.example.infiniteui.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

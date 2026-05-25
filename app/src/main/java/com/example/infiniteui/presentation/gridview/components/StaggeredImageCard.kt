@@ -1,4 +1,4 @@
-package com.example.infiniteui.presentation.gallery.components
+package com.example.infiniteui.presentation.gridview.components
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,13 +17,17 @@ import com.example.infiniteui.data.ImageItem
 @Composable
 fun StaggeredImageCard(
     image: ImageItem,
+    modifier: Modifier = Modifier,
     onClick: (ImageItem) -> Unit
 ) {
+    // We can keep the random height for a "masonry" look even in a regular grid, 
+    // or set a fixed height for a standard grid look.
     val height = remember(image.id) {
-        listOf(140.dp, 180.dp, 220.dp, 260.dp, 300.dp).random()
+        listOf(180.dp, 220.dp, 260.dp).random()
     }
+    
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(height),
         shape = RoundedCornerShape(20.dp),
@@ -34,7 +38,7 @@ fun StaggeredImageCard(
     ) {
         AsyncImage(
             model = image.imageUrl,
-            contentDescription = "",
+            contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )
