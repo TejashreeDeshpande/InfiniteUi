@@ -6,12 +6,16 @@ import com.example.infiniteui.data.Article
 import com.example.infiniteui.data.MockRepository
 import kotlinx.coroutines.delay
 
-class ArticlePagingSource: PagingSource<Int, Article>() {
+class ArticlePagingSource(
+    private val loadDelay: Long = 800L
+) : PagingSource<Int, Article>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Article> {
         val allArticles = MockRepository.mockArticles
 
         return try {
-            delay(800)
+            if (loadDelay > 0) {
+                delay(loadDelay)
+            }
 
             val page = params.key ?: 0
             val pageSize = params.loadSize
@@ -38,5 +42,4 @@ class ArticlePagingSource: PagingSource<Int, Article>() {
                 ?: state.closestPageToPosition(anchor)?.nextKey?.minus(1)
         }
     }
-
 }

@@ -40,6 +40,8 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import com.example.infiniteui.data.Article
+import com.example.infiniteui.presentation.common.components.EmptyState
+import com.example.infiniteui.presentation.common.components.ErrorState
 import com.example.infiniteui.presentation.feed.viewmodel.ArticleViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -106,59 +108,88 @@ fun ArticleListScreen() {
             )
         }
     ) { paddingValues ->
-        PullToRefreshBox(
-            isRefreshing = isRefreshing,
-            onRefresh = { articles.refresh() },
-            state = pullToRefreshState,
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
                 .background(MaterialTheme.colorScheme.background)
         ) {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(
-                    start = 16.dp,
-                    end = 16.dp,
-                    bottom = 16.dp
-                ),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                items(
-                    count = articles.itemCount,
-                    key = articles.itemKey { it.id }
-                ) { index ->
-                    val article = articles[index]
-
-                    if (article != null) {
-                        ArticleCard(article)
+            when {
+                articles.loadState.refresh is LoadState.Loading && articles.itemCount == 0 -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
                     }
                 }
-                when (articles.loadState.append) {
-                    is LoadState.Loading -> {
-                        item {
-                            CircularProgressIndicator(
-                                color = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp)
-                                    .wrapContentWidth()
-                            )
-                        }
-                    }
 
-                    is LoadState.Error -> {
-                        item {
-                            Button(
-                                onClick = { articles.retry() },
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                Text("Retry")
+                articles.loadState.refresh is LoadState.Error -> {
+                    val error = articles.loadState.refresh as LoadState.Error
+                    ErrorState(
+                        errorMessage = error.error.localizedMessage ?: "Unknown error occurred",
+                        onRetry = { articles.retry() }
+                    )
+                }
+
+                articles.loadState.refresh is LoadState.NotLoading && articles.itemCount == 0 -> {
+                    EmptyState()
+                }
+
+                else -> {
+                    PullToRefreshBox(
+                        isRefreshing = isRefreshing,
+                        onRefresh = { articles.refresh() },
+                        state = pullToRefreshState,
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize(),
+                            contentPadding = PaddingValues(
+                                start = 16.dp,
+                                end = 16.dp,
+                                bottom = 16.dp
+                            ),
+                            verticalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            items(
+                                count = articles.itemCount,
+                                key = articles.itemKey { it.id }
+                            ) { index ->
+                                val article = articles[index]
+
+                                if (article != null) {
+                                    ArticleCard(article)
+                                }
+                            }
+                            when (articles.loadState.append) {
+                                is LoadState.Loading -> {
+                                    item {
+                                        CircularProgressIndicator(
+                                            color = MaterialTheme.colorScheme.primary,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(16.dp)
+                                                .wrapContentWidth()
+                                        )
+                                    }
+                                }
+
+                                is LoadState.Error -> {
+                                    item {
+                                        Button(
+                                            onClick = { articles.retry() },
+                                            modifier = Modifier.fillMaxWidth()
+                                        ) {
+                                            Text("Retry")
+                                        }
+                                    }
+                                }
+
+                                else -> Unit
                             }
                         }
                     }
-
-                    else -> Unit
                 }
             }
         }
