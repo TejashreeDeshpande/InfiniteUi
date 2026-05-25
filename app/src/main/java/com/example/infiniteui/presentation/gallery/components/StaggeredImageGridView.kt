@@ -13,15 +13,22 @@ import com.example.infiniteui.data.ImageItem
 
 import androidx.paging.compose.itemKey
 
+import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
+import com.example.infiniteui.presentation.common.modifiers.lazyStaggeredGridScrollbar
+
 @Composable
 fun StaggeredImageGridView(
     images: LazyPagingItems<ImageItem>,
     onImageClick: (ImageItem) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val state = rememberLazyStaggeredGridState()
     LazyVerticalStaggeredGrid(
         columns = StaggeredGridCells.Fixed(2),
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .lazyStaggeredGridScrollbar(state),
+        state = state,
         contentPadding = PaddingValues(12.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalItemSpacing = 12.dp

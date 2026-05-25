@@ -24,7 +24,7 @@ fun StaggeredImageCard(
     onClick: (ImageItem) -> Unit
 ) {
     // Deterministic height based on ID prevents jumping when scrolling back up
-    val heights = listOf(180.dp, 220.dp, 260.dp)
+    val heights = listOf(160.dp, 200.dp, 240.dp, 280.dp, 320.dp)
     val height = remember(image.id) {
         heights[image.id.hashCode().coerceAtLeast(0) % heights.size]
     }

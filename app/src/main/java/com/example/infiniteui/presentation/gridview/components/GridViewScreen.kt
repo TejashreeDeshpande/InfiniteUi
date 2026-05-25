@@ -54,7 +54,7 @@ fun GridViewScreen(
                             )
                         }
 
-                        else -> StaggeredImageGridView(
+                        else -> ImageGridView(
                             images = images,
                             sharedTransitionScope = this@SharedTransitionLayout,
                             animatedVisibilityScope = this@AnimatedContent,

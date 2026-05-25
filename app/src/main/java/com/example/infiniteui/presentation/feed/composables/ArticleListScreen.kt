@@ -45,6 +45,9 @@ import com.example.infiniteui.presentation.common.components.ErrorState
 import com.example.infiniteui.presentation.feed.viewmodel.ArticleViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
+import androidx.compose.foundation.lazy.rememberLazyListState
+import com.example.infiniteui.presentation.common.modifiers.lazyListScrollbar
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArticleListScreen() {
@@ -53,6 +56,7 @@ fun ArticleListScreen() {
 
     val isRefreshing = articles.loadState.refresh is LoadState.Loading
     val pullToRefreshState = rememberPullToRefreshState()
+    val listState = rememberLazyListState()
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
@@ -144,7 +148,10 @@ fun ArticleListScreen() {
                         modifier = Modifier.fillMaxSize()
                     ) {
                         LazyColumn(
-                            modifier = Modifier.fillMaxSize(),
+                            state = listState,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .lazyListScrollbar(listState),
                             contentPadding = PaddingValues(
                                 start = 16.dp,
                                 end = 16.dp,
