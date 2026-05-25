@@ -11,6 +11,7 @@ class ArticleRepository {
         return Pager(
             config = PagingConfig(
                 pageSize = 10,
+                prefetchDistance = 5,
                 enablePlaceholders = false
             ),
             pagingSourceFactory = { ArticlePagingSource() }
