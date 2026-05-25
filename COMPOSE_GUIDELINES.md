@@ -52,4 +52,3 @@ To maintain consistency, follow this order for parameters:
 *   **No Hardcoded Colors**: Always reference the theme. If a specific color is needed, add it to the `Color.kt` and include it in the `ColorScheme`.
 
 ---
-*Last Updated: 2025-02-12*
