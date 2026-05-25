@@ -40,3 +40,6 @@ InfiniteUI is a sample Android application demonstrating how to implement infini
    ```
 2. Open the project in **Android Studio (Ladybug or newer)**.
 3. Sync Gradle and run the app on an emulator or physical device.
+
+## Coding Standards
+For guidelines on how to write Compose code in this project, please refer to [COMPOSE_GUIDELINES.md](./COMPOSE_GUIDELINES.md).
