@@ -30,7 +30,11 @@ fun StaggeredImageGridView(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalItemSpacing = 12.dp
     ) {
-        items(images.itemCount) { index ->
+        items(
+            count = images.itemCount,
+            key = { index -> images[index]?.id ?: index },
+            contentType = { "image_card" }
+        ) { index ->
             val image = images[index]
             image?.let { item ->
                 with(sharedTransitionScope) {

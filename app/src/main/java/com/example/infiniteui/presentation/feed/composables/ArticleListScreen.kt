@@ -41,8 +41,6 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import com.example.infiniteui.data.Article
 import com.example.infiniteui.presentation.feed.viewmodel.ArticleViewModel
-import com.example.infiniteui.ui.theme.PurplePrimary
-import com.example.infiniteui.ui.theme.PurpleSecondary
 import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -69,8 +67,8 @@ fun ArticleListScreen() {
                                 .background(
                                     brush = Brush.linearGradient(
                                         listOf(
-                                            PurplePrimary,
-                                            PurpleSecondary
+                                            MaterialTheme.colorScheme.primary,
+                                            MaterialTheme.colorScheme.secondary
                                         )
                                     ),
                                     shape = RoundedCornerShape(14.dp)

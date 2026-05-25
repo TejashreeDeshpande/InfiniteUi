@@ -29,8 +29,9 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun GridViewScreen() {
-    val viewModel: ImageViewModel = koinViewModel()
+fun GridViewScreen(
+    viewModel: ImageViewModel = koinViewModel()
+) {
     val images = viewModel.images.collectAsLazyPagingItems()
     var selectedImage by remember {
         mutableStateOf<ImageItem?>(null)
@@ -52,19 +53,17 @@ fun GridViewScreen() {
 
                         is LoadState.Error -> {
                             RetryPageItem(
-                                modifier = Modifier.align(Alignment.Center)
-                            ) {
-                                images.retry()
-                            }
+                                modifier = Modifier.align(Alignment.Center),
+                                onRetry = { images.retry() }
+                            )
                         }
 
                         else -> StaggeredImageGridView(
                             images = images,
                             sharedTransitionScope = this@SharedTransitionLayout,
                             animatedVisibilityScope = this@AnimatedContent,
-                            onImageClick = {
-                                selectedImage = it
-                            })
+                            onImageClick = { selectedImage = it }
+                        )
                     }
                 }
 

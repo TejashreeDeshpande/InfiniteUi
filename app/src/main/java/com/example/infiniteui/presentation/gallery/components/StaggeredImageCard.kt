@@ -17,13 +17,15 @@ import com.example.infiniteui.data.ImageItem
 @Composable
 fun StaggeredImageCard(
     image: ImageItem,
+    modifier: Modifier = Modifier,
     onClick: (ImageItem) -> Unit
 ) {
+    val heights = listOf(140.dp, 180.dp, 220.dp, 260.dp, 300.dp)
     val height = remember(image.id) {
-        listOf(140.dp, 180.dp, 220.dp, 260.dp, 300.dp).random()
+        heights[image.id.hashCode().coerceAtLeast(0) % heights.size]
     }
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(height),
         shape = RoundedCornerShape(20.dp),
@@ -34,7 +36,7 @@ fun StaggeredImageCard(
     ) {
         AsyncImage(
             model = image.imageUrl,
-            contentDescription = "",
+            contentDescription = "Image ${image.id}",
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )

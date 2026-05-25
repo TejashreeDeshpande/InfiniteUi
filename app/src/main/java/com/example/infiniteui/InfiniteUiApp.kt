@@ -1,6 +1,7 @@
-package com.example.infiniteui.di
+package com.example.infiniteui
 
 import android.app.Application
+import com.example.infiniteui.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 

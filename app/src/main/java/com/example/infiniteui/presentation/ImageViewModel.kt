@@ -2,17 +2,11 @@ package com.example.infiniteui.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
-import com.example.infiniteui.presentation.gallery.pagingsource.ImagePagingSource
+import com.example.infiniteui.data.ImageRepository
 
-class ImageViewModel : ViewModel() {
-    var images = Pager(
-        config = PagingConfig(
-            pageSize = 10,
-            enablePlaceholders = false
-        ),
-        pagingSourceFactory = { ImagePagingSource() }
-    ).flow.cachedIn(viewModelScope)
+class ImageViewModel(
+    repository: ImageRepository
+) : ViewModel() {
+    val images = repository.getImages().cachedIn(viewModelScope)
 }

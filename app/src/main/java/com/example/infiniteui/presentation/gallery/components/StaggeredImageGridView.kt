@@ -26,14 +26,15 @@ fun StaggeredImageGridView(
     ) {
         items(
             count = images.itemCount,
-            key = { index -> images[index]?.id ?: index }
+            key = { index -> images[index]?.id ?: index },
+            contentType = { "image_card" }
         ) { index ->
 
             val image = images[index]
             image?.let {
                 StaggeredImageCard(
                     image = it,
-                    onClick = { onImageClick(image) })
+                    onClick = { onImageClick(it) })
             }
         }
     }

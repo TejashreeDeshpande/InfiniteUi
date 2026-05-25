@@ -20,12 +20,12 @@ fun StaggeredImageCard(
     modifier: Modifier = Modifier,
     onClick: (ImageItem) -> Unit
 ) {
-    // We can keep the random height for a "masonry" look even in a regular grid, 
-    // or set a fixed height for a standard grid look.
+    // Deterministic height based on ID prevents jumping when scrolling back up
+    val heights = listOf(180.dp, 220.dp, 260.dp)
     val height = remember(image.id) {
-        listOf(180.dp, 220.dp, 260.dp).random()
+        heights[image.id.hashCode().coerceAtLeast(0) % heights.size]
     }
-    
+
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -38,7 +38,7 @@ fun StaggeredImageCard(
     ) {
         AsyncImage(
             model = image.imageUrl,
-            contentDescription = null,
+            contentDescription = "Image ${image.id}",
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )
