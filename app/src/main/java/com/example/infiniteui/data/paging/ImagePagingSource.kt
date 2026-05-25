@@ -13,19 +13,19 @@ class ImagePagingSource: PagingSource<Int, ImageItem>() {
         return try {
             delay(800)
 
-            val page = params.key ?: 0
-            val pageSize = params.loadSize
-            val fromIndex = page * pageSize
-            val toIndex = minOf(fromIndex + pageSize, allImages.size)
+            val position = params.key ?: 0
+            val loadSize = params.loadSize
+            
+            val toIndex = minOf(position + loadSize, allImages.size)
 
-            val items = if (fromIndex < allImages.size) {
-                allImages.subList(fromIndex, toIndex)
+            val items = if (position < allImages.size) {
+                allImages.subList(position, toIndex)
             } else emptyList()
 
             LoadResult.Page(
                 data = items,
-                prevKey = if (page == 0) null else page - 1,
-                nextKey = if (toIndex >= allImages.size) null else page + 1
+                prevKey = if (position == 0) null else maxOf(0, position - loadSize),
+                nextKey = if (toIndex >= allImages.size) null else toIndex
             )
         } catch (e: Exception) {
             LoadResult.Error(e)
@@ -34,11 +34,10 @@ class ImagePagingSource: PagingSource<Int, ImageItem>() {
 
     override fun getRefreshKey(state: PagingState<Int, ImageItem>): Int? {
         return state.anchorPosition?.let { position ->
-
             state.closestPageToPosition(position)
-                ?.prevKey?.plus(1)
+                ?.prevKey?.plus(state.config.pageSize)
                 ?: state.closestPageToPosition(position)
-                    ?.nextKey?.minus(1)
+                    ?.nextKey?.minus(state.config.pageSize)
         }
     }
 }

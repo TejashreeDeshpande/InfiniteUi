@@ -17,19 +17,19 @@ class ArticlePagingSource(
                 delay(loadDelay)
             }
 
-            val page = params.key ?: 0
-            val pageSize = params.loadSize
-            val fromIndex = page * pageSize
-            val toIndex = minOf(fromIndex + pageSize, allArticles.size)
+            val position = params.key ?: 0
+            val loadSize = params.loadSize
+            
+            val toIndex = minOf(position + loadSize, allArticles.size)
 
-            val items = if (fromIndex < allArticles.size) {
-                allArticles.subList(fromIndex, toIndex)
+            val items = if (position < allArticles.size) {
+                allArticles.subList(position, toIndex)
             } else emptyList()
 
             LoadResult.Page(
                 data = items,
-                prevKey = if (page == 0) null else page - 1,
-                nextKey = if (toIndex >= allArticles.size) null else page + 1
+                prevKey = if (position == 0) null else maxOf(0, position - loadSize),
+                nextKey = if (toIndex >= allArticles.size) null else toIndex
             )
         } catch (e: Exception) {
             LoadResult.Error(e)
@@ -38,8 +38,8 @@ class ArticlePagingSource(
 
     override fun getRefreshKey(state: PagingState<Int, Article>): Int? {
         return state.anchorPosition?.let { anchor ->
-            state.closestPageToPosition(anchor)?.prevKey?.plus(1)
-                ?: state.closestPageToPosition(anchor)?.nextKey?.minus(1)
+            state.closestPageToPosition(anchor)?.prevKey?.plus(state.config.pageSize)
+                ?: state.closestPageToPosition(anchor)?.nextKey?.minus(state.config.pageSize)
         }
     }
 }

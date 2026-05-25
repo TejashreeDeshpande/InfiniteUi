@@ -14,6 +14,9 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.infiniteui.data.ImageItem
 
+import coil.request.ImageRequest
+import androidx.compose.ui.platform.LocalContext
+
 @Composable
 fun StaggeredImageCard(
     image: ImageItem,
@@ -35,7 +38,10 @@ fun StaggeredImageCard(
         }
     ) {
         AsyncImage(
-            model = image.imageUrl,
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(image.imageUrl)
+                .crossfade(true)
+                .build(),
             contentDescription = "Image ${image.id}",
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()

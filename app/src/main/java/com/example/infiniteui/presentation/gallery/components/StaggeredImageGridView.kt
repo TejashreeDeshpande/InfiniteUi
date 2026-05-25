@@ -11,6 +11,8 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import com.example.infiniteui.data.ImageItem
 
+import androidx.paging.compose.itemKey
+
 @Composable
 fun StaggeredImageGridView(
     images: LazyPagingItems<ImageItem>,
@@ -26,7 +28,7 @@ fun StaggeredImageGridView(
     ) {
         items(
             count = images.itemCount,
-            key = { index -> images[index]?.id ?: index },
+            key = images.itemKey { it.id },
             contentType = { "image_card" }
         ) { index ->
 
